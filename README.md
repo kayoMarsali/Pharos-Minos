@@ -1,2 +1,2 @@
-# pharos minos
+# Pharos Minos
  Active Time Tactical RPG

@@ -1,12 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Materials/TestMat.material" type="Material" id=1]
-[ext_resource path="res://Meshes/Units/TestUnitA.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Meshes/Units/TestUnitA/TestUnitA.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Scripts/Units/Unit.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Units/Charges.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Units/ActionBar.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Units/Aura.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Units/Health.gd" type="Script" id=7]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.460643, 0.498708, 0.810387 )
 
 [node name="UnitA" type="Spatial"]
+script = ExtResource( 3 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
@@ -22,3 +28,54 @@ shape = SubResource( 1 )
 __meta__ = {
 "_editor_description_": "1"
 }
+
+[node name="ActionBar" type="ProgressBar" parent="."]
+margin_left = 0.707108
+margin_top = 20.5061
+margin_right = 96.7071
+margin_bottom = 34.5061
+percent_visible = false
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Aura" type="RichTextLabel" parent="ActionBar"]
+margin_left = 44.5251
+margin_top = -19.5251
+margin_right = 98.5251
+margin_bottom = -0.525124
+visible_characters = 5
+text = "/2030"
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Charges" type="RichTextLabel" parent="ActionBar"]
+margin_left = 3.0
+margin_top = 15.0
+margin_right = 95.0
+margin_bottom = 31.0
+tab_size = 5
+text = "0"
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="RichTextLabel" parent="ActionBar"]
+margin_left = 1.0
+margin_top = -20.0
+margin_right = 45.0
+margin_bottom = -1.0
+bbcode_enabled = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="ap_updated" from="." to="ActionBar" method="_on_UnitA_ap_updated"]
+[connection signal="aura_updated" from="." to="ActionBar/Aura" method="_on_UnitA_aura_updated"]
+[connection signal="charges_updated" from="." to="ActionBar/Charges" method="_on_UnitA_charges_updated"]
+[connection signal="health_updated" from="." to="ActionBar/Health" method="_on_UnitA_health_updated"]
